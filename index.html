@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/main.js"></script>
+    <title></title>
+    <style>
+        .rows {
+            height: 50px;
+        }
+        .cols {
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+        }
+        .cols span {
+            display: block;
+            border: 1px solid #0000ff;
+            margin: 1px;
+        }
+    </style>
+</head>
+<body ng-app="app">
+    <!--生成3行3列的grid-->
+    <div ng-controller="gridContainer as myGrid">
+        <div ng-repeat="row in myGrid.gridData" class="rows">
+            <div ng-repeat="item in row" class="cols">
+                <span class="number" ng-click="myGrid.showClickNum(item.value)">{{ item.value }}</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
