@@ -13,23 +13,43 @@
             display: inline-block;
             height: 50px;
             width: 50px;
+            vertical-align: middle;
         }
-        .cols span {
+
+        .number-container.complete{
+            background-color: antiquewhite;
+        }
+
+        .number-container {
             display: block;
+            width: 46px;
+            height: 46px;
             border: 1px solid #0000ff;
             margin: 1px;
+        }
+        .number {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .control-panel {
+            margin: 20px;
         }
     </style>
 </head>
 <body ng-app="app">
-    <!--生成3行3列的grid-->
     <div ng-controller="gridContainer as myGrid">
-        <div ng-repeat="row in myGrid.gridData" class="rows">
-            <div ng-repeat="item in row" class="cols">
-                <span class="number" ng-click="myGrid.showClickNum(item.value)">{{ item.value }}</span>
+        <!--生成 grid 参考 http://stackoverflow.com/questions/20137496/angular-js-ng-repeat-for-creating-grid-->
+        <div ng-repeat="item in myGrid.gridData track by $index" ng-if="$index % myGrid.rows == 0" class="rows">
+            <div ng-repeat="i in myGrid.genCols($index)" ng-if="myGrid.gridData[i] != null" class="cols">
+                <div class="number-container" ng-click="myGrid.checkClickNum(myGrid.gridData[i])" ng-class="{'complete':myGrid.itemIsComplete(myGrid.gridData[i])}">
+                    <div ng-show="myGrid.show(myGrid.gridData[i].status)" class="number">{{ myGrid.gridData[i].value }}</div>
+                </div>
             </div>
         </div>
-
+        <div class="control-panel">
+            <button ng-click="myGrid.playAgain()">我要(重新)再玩一次！</button>
+        </div>
     </div>
 </body>
 </html>
